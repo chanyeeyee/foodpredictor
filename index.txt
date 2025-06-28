@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Consumption Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4 url('https://openclipart.org/download/307791/turtle-cartoon.svg') no-repeat center center fixed;
+            background-size: contain;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h2 {
+            color: #2c3e50;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            text-align: left;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button {
+            margin-top: 20px;
+            padding: 12px 20px;
+            border: none;
+            background: #3498db;
+            color: white;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Food Consumption Predictor</h2>
+        <label for="income">Family Income ($):</label>
+        <input type="number" id="income" step="0.01" placeholder="Enter family income">
+
+        <label for="size">Family Size:</label>
+        <input type="number" id="size" step="1" placeholder="Enter family size">
+
+        <button onclick="predict()">Predict</button>
+
+        <div class="result" id="output"></div>
+    </div>
+
+    <script>
+        function predict() {
+            const income = parseFloat(document.getElementById('income').value);
+            const size = parseFloat(document.getElementById('size').value);
+
+            if (isNaN(income) || isNaN(size)) {
+                document.getElementById('output').innerHTML = "Please enter valid numbers.";
+                return;
+            }
+
+            // Model: food = -1.118 + 0.148 * income + 0.793 * size
+            const food = -1.118 + (0.148 * income) + (0.793 * size);
+            const rounded = food.toFixed(2);
+
+            document.getElementById('output').innerHTML = `Estimated Food Consumption: <strong>$${rounded}</strong>`;
+        }
+    </script>
+
+</body>
+</html>
