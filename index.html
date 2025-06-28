@@ -1,92 +1,94 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Food Consumption Predictor</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: url('https://www.publicdomainpictures.net/pictures/320000/velka/cute-turtle-cartoon.jpg') no-repeat center center fixed;
-            background-size: cover;
-            padding: 30px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.9);
-            padding: 25px 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 400px;
-            text-align: center;
-        }
-        h2 {
-            color: #2c3e50;
-        }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            text-align: left;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-        }
-        button {
-            margin-top: 20px;
-            padding: 12px 20px;
-            border: none;
-            background: #3498db;
-            color: white;
-            font-size: 16px;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #2980b9;
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #27ae60;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Food Consumption Predictor</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/7/7f/Green_turtle_swimming_over_coral_reefs_in_Kona.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .container {
+      background: rgba(255, 255, 255, 0.85);
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 {
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      text-align: left;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      border: none;
+      background: #3498db;
+      color: white;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #27ae60;
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
+    <h2>Food Consumption Predictor</h2>
+    <label for="income">Family Income ($):</label>
+    <input type="number" id="income" step="0.01" placeholder="Enter family income">
 
-    <div class="container">
-        <h2>Food Consumption Predictor</h2>
-        <label for="income">Family Income ($):</label>
-        <input type="number" id="income" step="0.01" placeholder="Enter family income">
+    <label for="size">Family Size:</label>
+    <input type="number" id="size" step="1" placeholder="Enter family size">
 
-        <label for="size">Family Size:</label>
-        <input type="number" id="size" step="1" placeholder="Enter family size">
+    <button onclick="predict()">Predict</button>
 
-        <button onclick="predict()">Predict</button>
+    <div class="result" id="output"></div>
+  </div>
 
-        <div class="result" id="output"></div>
-    </div>
+  <script>
+    function predict() {
+      const income = parseFloat(document.getElementById('income').value);
+      const size = parseFloat(document.getElementById('size').value);
 
-    <script>
-        function predict() {
-            const income = parseFloat(document.getElementById('income').value);
-            const size = parseFloat(document.getElementById('size').value);
+      if (isNaN(income) || isNaN(size)) {
+        document.getElementById('output').innerHTML = "Please enter valid numbers.";
+        return;
+      }
 
-            if (isNaN(income) || isNaN(size)) {
-                document.getElementById('output').innerHTML = "Please enter valid numbers.";
-                return;
-            }
+      const food = -1.118 + (0.148 * income) + (0.793 * size);
+      const rounded = food.toFixed(2);
 
-            // Model: food = -1.118 + 0.148 * income + 0.793 * size
-            const food = -1.118 + (0.148 * income) + (0.793 * size);
-            const rounded = food.toFixed(2);
-
-            document.getElementById('output').innerHTML = `Estimated Food Consumption: <strong>$${rounded}</strong>`;
-        }
-    </script>
-
+      document.getElementById('output').innerHTML = `Estimated Food Consumption: <strong>$${rounded}</strong>`;
+    }
+  </script>
 </body>
 </html>
